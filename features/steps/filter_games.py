@@ -23,6 +23,9 @@ def step_impl(context):
 def step_impl(context, developer):
 	context.developer = developer
 
+@given('the user enters categories of rating: {rating}')
+def step_impl(context, rating):
+	context.rating = [rating]
 
 @when("the user search games by {criteria}")
 def step_impl(context, criteria):
@@ -31,6 +34,12 @@ def step_impl(context, criteria):
 		print(result)
 		context.result = result
 		context.message = message
+	elif(criteria == 'rating'):
+		result, message, error = get_game_rating(context.games,context.rating)
+		print(result)
+		context.result = result
+		context.message = message
+		context.error = error
 
 
 @then("{total} games will match")
